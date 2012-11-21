@@ -3,21 +3,22 @@
 <%@page import="co.edu.unal.pesi.modelo.*"%>
 <%@page import="co.edu.unal.pesi.servicio.*"%>
 <%@page import="co.edu.unal.pesi.vista.*"%>
-<%
-
+<%    
+    
     session.removeAttribute("listaGrupos");
     Servicio servicio = (Servicio) session.getAttribute("servicio");
     if (servicio == null) {
         servicio = new Servicio();
+        session.setAttribute("servicio", servicio);
     }
-
+    
     GruposJpaController servicioGrp = servicio.getCrlGrupos();
     List list = (List) session.getAttribute("listaGrupos");
     if (list == null) {
         list = servicioGrp.findGruposEntities();
         session.setAttribute("listaGrupos", list);
     }
-
+    
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -37,13 +38,13 @@
                     <td>GRUPO</td>
                     <td>
                         <select name="grupo" id="grupo">
-                            <%
+                            <%                                
                                 int idx1 = 0;
                                 for (java.util.Iterator it = list.iterator(); it.hasNext();) {
                                     Grupos grp = (Grupos) it.next();
                             %>
                             <option value="<%=idx1++%>"><%=grp.getNombre().toUpperCase()%></option>
-                            <%
+                            <%                                    
                                 }
                             %>
                         </select>

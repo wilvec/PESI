@@ -7,6 +7,7 @@
     Servicio servicio = (Servicio) session.getAttribute("servicio");
     if (servicio == null) {
         servicio = new Servicio();
+        session.setAttribute("servicio", servicio);
     }
 
     ClasedatosJpaController servCD = servicio.getCtrlClaseDatos();
@@ -14,7 +15,7 @@
     Clasedatos clase = new Clasedatos();
     String descripcion = request.getParameter("descripcion") == null ? "" : request.getParameter("descripcion");
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre");
-    
+
     List lista = (List) session.getAttribute("listaEntidad");
     int index = Integer.valueOf(request.getParameter("entidad") == null ? "0" : request.getParameter("entidad"));
     Entidad ent = (Entidad) lista.get(index);

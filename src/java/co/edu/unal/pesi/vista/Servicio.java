@@ -1,10 +1,13 @@
 package co.edu.unal.pesi.vista;
 
+import co.edu.unal.pesi.modelo.Grupos;
+import co.edu.unal.pesi.modelo.Subgrupos;
 import co.edu.unal.pesi.servicio.ClasedatosJpaController;
 import co.edu.unal.pesi.servicio.EntidadJpaController;
 import co.edu.unal.pesi.servicio.GruposJpaController;
 import co.edu.unal.pesi.servicio.OrganizacionesJpaController;
 import co.edu.unal.pesi.servicio.SubgruposJpaController;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -56,4 +59,14 @@ public class Servicio {
         }
         return clasesDatos;
     }
+
+
+    public List<Grupos> listarGrupos(){
+        return getCrlGrupos().findGruposEntities();
+    }
+    
+    public List<Subgrupos> listarSubgrupos(){
+        return getCtrlSubGrupos().findSubgruposEntities();
+    }
+
 }

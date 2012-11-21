@@ -9,12 +9,13 @@
     Servicio servicio = (Servicio) session.getAttribute("servicio");
     if (servicio == null) {
         servicio = new Servicio();
+        session.setAttribute("servicio", servicio);
     }
 
-        
-    EntidadJpaController servEntidad = servicio.getCtrlEntidad();    
-        
-    
+
+    EntidadJpaController servEntidad = servicio.getCtrlEntidad();
+
+
     List list = (List) session.getAttribute("listaEntidad");
     if (list == null) {
         list = servEntidad.findEntidadEntities();
@@ -33,8 +34,8 @@
         <form id="form1" name="form1" method="post" action="clasedatosreg.jsp">
             <table width="45%" border="0" cellspacing="1" cellpadding="1">
                 <tr>
-                  <td>CODIGO</td>
-                  <td><input name="codigo" type="text" id="codigo" size="15" /></td>
+                    <td>CODIGO</td>
+                    <td><input name="codigo" type="text" id="codigo" size="15" /></td>
                 </tr>
                 <tr>
                     <td width="23%">NOMBRE</td>
@@ -47,7 +48,7 @@
                             <%
                                 int idx1 = 0;
                                 for (java.util.Iterator it = list.iterator(); it.hasNext();) {
-                                    Entidad ent = (Entidad)it.next();
+                                    Entidad ent = (Entidad) it.next();
                             %>
                             <option value="<%=idx1++%>"><%=ent.getNombre().toUpperCase()%></option>
                             <%
