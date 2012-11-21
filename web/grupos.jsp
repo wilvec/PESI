@@ -6,8 +6,8 @@
 <title>ORGANIZACIONES</title>
 </head>
 <body>
-<h1>ORGANIZACION</h1>
-<form name="form1" method="post" action="organizacionreg.jsp">
+<h1>GRUPOS</h1>
+<form name="form1" method="post" action="gruporeg.jsp">
 <table width="64%" border="0" cellspacing="1" cellpadding="1">
   <tr>
     <td width="26%">&nbsp;</td>

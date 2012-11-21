@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,6 +31,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Entidad.findById", query = "SELECT e FROM Entidad e WHERE e.id = :id"),
     @NamedQuery(name = "Entidad.findByNombre", query = "SELECT e FROM Entidad e WHERE e.nombre = :nombre")})
 public class Entidad implements Serializable {
+    @Basic(optional = false)
+    @Column(name = "tipoentidad")
+    private int tipoentidad;
+    @Lob
+    @Column(name = "descripcion")
+    private String descripcion;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -101,6 +108,22 @@ public class Entidad implements Serializable {
     @Override
     public String toString() {
         return "co.edu.unal.pesi.modelo.Entidad[ id=" + id + " ]";
+    }
+
+    public int getTipoentidad() {
+        return tipoentidad;
+    }
+
+    public void setTipoentidad(int tipoentidad) {
+        this.tipoentidad = tipoentidad;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
 }

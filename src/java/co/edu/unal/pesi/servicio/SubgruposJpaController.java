@@ -4,16 +4,15 @@
  */
 package co.edu.unal.pesi.servicio;
 
+import co.edu.unal.pesi.modelo.Procesos;
+import co.edu.unal.pesi.modelo.Subgrupos;
+import co.edu.unal.pesi.servicio.exceptions.IllegalOrphanException;
+import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.edu.unal.pesi.modelo.Grupos;
-import co.edu.unal.pesi.modelo.Procesos;
-import co.edu.unal.pesi.modelo.Subgrupos;
-import co.edu.unal.pesi.servicio.exceptions.IllegalOrphanException;
-import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -42,11 +41,6 @@ public class SubgruposJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Grupos gruposId = subgrupos.getGruposId();
-            if (gruposId != null) {
-                gruposId = em.getReference(gruposId.getClass(), gruposId.getId());
-                subgrupos.setGruposId(gruposId);
-            }
             List<Procesos> attachedProcesosList = new ArrayList<Procesos>();
             for (Procesos procesosListProcesosToAttach : subgrupos.getProcesosList()) {
                 procesosListProcesosToAttach = em.getReference(procesosListProcesosToAttach.getClass(), procesosListProcesosToAttach.getId());
@@ -54,10 +48,6 @@ public class SubgruposJpaController implements Serializable {
             }
             subgrupos.setProcesosList(attachedProcesosList);
             em.persist(subgrupos);
-            if (gruposId != null) {
-                gruposId.getSubgruposList().add(subgrupos);
-                gruposId = em.merge(gruposId);
-            }
             for (Procesos procesosListProcesos : subgrupos.getProcesosList()) {
                 Subgrupos oldSubgruposIdOfProcesosListProcesos = procesosListProcesos.getSubgruposId();
                 procesosListProcesos.setSubgruposId(subgrupos);
@@ -81,8 +71,6 @@ public class SubgruposJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Subgrupos persistentSubgrupos = em.find(Subgrupos.class, subgrupos.getId());
-            Grupos gruposIdOld = persistentSubgrupos.getGruposId();
-            Grupos gruposIdNew = subgrupos.getGruposId();
             List<Procesos> procesosListOld = persistentSubgrupos.getProcesosList();
             List<Procesos> procesosListNew = subgrupos.getProcesosList();
             List<String> illegalOrphanMessages = null;
@@ -97,10 +85,6 @@ public class SubgruposJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (gruposIdNew != null) {
-                gruposIdNew = em.getReference(gruposIdNew.getClass(), gruposIdNew.getId());
-                subgrupos.setGruposId(gruposIdNew);
-            }
             List<Procesos> attachedProcesosListNew = new ArrayList<Procesos>();
             for (Procesos procesosListNewProcesosToAttach : procesosListNew) {
                 procesosListNewProcesosToAttach = em.getReference(procesosListNewProcesosToAttach.getClass(), procesosListNewProcesosToAttach.getId());
@@ -109,14 +93,6 @@ public class SubgruposJpaController implements Serializable {
             procesosListNew = attachedProcesosListNew;
             subgrupos.setProcesosList(procesosListNew);
             subgrupos = em.merge(subgrupos);
-            if (gruposIdOld != null && !gruposIdOld.equals(gruposIdNew)) {
-                gruposIdOld.getSubgruposList().remove(subgrupos);
-                gruposIdOld = em.merge(gruposIdOld);
-            }
-            if (gruposIdNew != null && !gruposIdNew.equals(gruposIdOld)) {
-                gruposIdNew.getSubgruposList().add(subgrupos);
-                gruposIdNew = em.merge(gruposIdNew);
-            }
             for (Procesos procesosListNewProcesos : procesosListNew) {
                 if (!procesosListOld.contains(procesosListNewProcesos)) {
                     Subgrupos oldSubgruposIdOfProcesosListNewProcesos = procesosListNewProcesos.getSubgruposId();
@@ -167,11 +143,6 @@ public class SubgruposJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Grupos gruposId = subgrupos.getGruposId();
-            if (gruposId != null) {
-                gruposId.getSubgruposList().remove(subgrupos);
-                gruposId = em.merge(gruposId);
             }
             em.remove(subgrupos);
             em.getTransaction().commit();

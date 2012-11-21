@@ -4,20 +4,24 @@
  */
 package co.edu.unal.pesi.servicio;
 
+import co.edu.unal.pesi.modelo.Organizaciones;
+import co.edu.unal.pesi.modelo.Organizaciones;
+import co.edu.unal.pesi.modelo.Procesos;
+import co.edu.unal.pesi.modelo.Procesos;
+import co.edu.unal.pesi.modelo.Procesosorganizaciones;
+import co.edu.unal.pesi.modelo.Procesosorganizaciones;
+import co.edu.unal.pesi.modelo.ProcesosorganizacionesPK;
+import co.edu.unal.pesi.modelo.ProcesosorganizacionesPK;
+import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
+import co.edu.unal.pesi.servicio.exceptions.PreexistingEntityException;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.edu.unal.pesi.modelo.Organizaciones;
-import co.edu.unal.pesi.modelo.Procesos;
-import co.edu.unal.pesi.modelo.Procesosorganizaciones;
-import co.edu.unal.pesi.modelo.ProcesosorganizacionesPK;
-import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
-import co.edu.unal.pesi.servicio.exceptions.PreexistingEntityException;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -38,8 +42,8 @@ public class ProcesosorganizacionesJpaController implements Serializable {
         if (procesosorganizaciones.getProcesosorganizacionesPK() == null) {
             procesosorganizaciones.setProcesosorganizacionesPK(new ProcesosorganizacionesPK());
         }
-        procesosorganizaciones.getProcesosorganizacionesPK().setProcesosId(procesosorganizaciones.getProcesos().getId());
         procesosorganizaciones.getProcesosorganizacionesPK().setOrganizacionesId(procesosorganizaciones.getOrganizaciones().getId());
+        procesosorganizaciones.getProcesosorganizacionesPK().setProcesosId(procesosorganizaciones.getProcesos().getId());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -77,8 +81,8 @@ public class ProcesosorganizacionesJpaController implements Serializable {
     }
 
     public void edit(Procesosorganizaciones procesosorganizaciones) throws NonexistentEntityException, Exception {
-        procesosorganizaciones.getProcesosorganizacionesPK().setProcesosId(procesosorganizaciones.getProcesos().getId());
         procesosorganizaciones.getProcesosorganizacionesPK().setOrganizacionesId(procesosorganizaciones.getOrganizaciones().getId());
+        procesosorganizaciones.getProcesosorganizacionesPK().setProcesosId(procesosorganizaciones.getProcesos().getId());
         EntityManager em = null;
         try {
             em = getEntityManager();

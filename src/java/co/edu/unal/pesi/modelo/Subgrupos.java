@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -34,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Subgrupos.findById", query = "SELECT s FROM Subgrupos s WHERE s.id = :id"),
     @NamedQuery(name = "Subgrupos.findByNombre", query = "SELECT s FROM Subgrupos s WHERE s.nombre = :nombre")})
 public class Subgrupos implements Serializable {
+    @Lob
+    @Column(name = "descripcion")
+    private String descripcion;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -117,6 +121,14 @@ public class Subgrupos implements Serializable {
     @Override
     public String toString() {
         return "co.edu.unal.pesi.modelo.Subgrupos[ id=" + id + " ]";
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
 }

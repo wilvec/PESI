@@ -6,8 +6,8 @@
 <title>ORGANIZACIONES</title>
 </head>
 <body>
-<h1>ORGANIZACION</h1>
-<form name="form1" method="post" action="organizacionreg.jsp">
+<h1>ENTIDADES</h1>
+<form name="form1" method="post" action="entidadesreg.jsp">
 <table width="64%" border="0" cellspacing="1" cellpadding="1">
   <tr>
     <td width="26%">&nbsp;</td>
@@ -16,6 +16,15 @@
   <tr>
     <td>NOMBRE</td>
     <td><input name="nombre" type="text" id="nombre" size="70" /></td>
+  </tr>
+  <tr>
+    <td>TIPO ENTIDAD</td>
+    <td><select name="tipoentidad" id="tipoentidad">
+      <option value="1" selected="selected">PERSONA</option>
+      <option value="2">LUGAR</option>
+      <option value="3">OBJETO</option>
+      <option value="4">CONCEPTO</option>
+    </select></td>
   </tr>
   <tr>
     <td>DESCRIPCION</td>

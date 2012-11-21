@@ -4,16 +4,16 @@
  */
 package co.edu.unal.pesi.servicio;
 
-import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import co.edu.unal.pesi.modelo.Clasedatos;
 import co.edu.unal.pesi.modelo.Entidad;
 import co.edu.unal.pesi.servicio.exceptions.IllegalOrphanException;
 import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
 import co.edu.unal.pesi.servicio.exceptions.PreexistingEntityException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

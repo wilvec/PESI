@@ -5,14 +5,14 @@
 package co.edu.unal.pesi.servicio;
 
 import co.edu.unal.pesi.modelo.Clasedatos;
+import co.edu.unal.pesi.modelo.Entidad;
+import co.edu.unal.pesi.modelo.Procesos;
+import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.edu.unal.pesi.modelo.Entidad;
-import co.edu.unal.pesi.modelo.Procesos;
-import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

@@ -5,18 +5,15 @@
 package co.edu.unal.pesi.servicio;
 
 import co.edu.unal.pesi.modelo.Grupos;
+import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.edu.unal.pesi.modelo.Subgrupos;
-import co.edu.unal.pesi.servicio.exceptions.IllegalOrphanException;
-import co.edu.unal.pesi.servicio.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -34,29 +31,11 @@ public class GruposJpaController implements Serializable {
     }
 
     public void create(Grupos grupos) {
-        if (grupos.getSubgruposList() == null) {
-            grupos.setSubgruposList(new ArrayList<Subgrupos>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Subgrupos> attachedSubgruposList = new ArrayList<Subgrupos>();
-            for (Subgrupos subgruposListSubgruposToAttach : grupos.getSubgruposList()) {
-                subgruposListSubgruposToAttach = em.getReference(subgruposListSubgruposToAttach.getClass(), subgruposListSubgruposToAttach.getId());
-                attachedSubgruposList.add(subgruposListSubgruposToAttach);
-            }
-            grupos.setSubgruposList(attachedSubgruposList);
             em.persist(grupos);
-            for (Subgrupos subgruposListSubgrupos : grupos.getSubgruposList()) {
-                Grupos oldGruposIdOfSubgruposListSubgrupos = subgruposListSubgrupos.getGruposId();
-                subgruposListSubgrupos.setGruposId(grupos);
-                subgruposListSubgrupos = em.merge(subgruposListSubgrupos);
-                if (oldGruposIdOfSubgruposListSubgrupos != null) {
-                    oldGruposIdOfSubgruposListSubgrupos.getSubgruposList().remove(subgruposListSubgrupos);
-                    oldGruposIdOfSubgruposListSubgrupos = em.merge(oldGruposIdOfSubgruposListSubgrupos);
-                }
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -65,45 +44,12 @@ public class GruposJpaController implements Serializable {
         }
     }
 
-    public void edit(Grupos grupos) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Grupos grupos) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Grupos persistentGrupos = em.find(Grupos.class, grupos.getId());
-            List<Subgrupos> subgruposListOld = persistentGrupos.getSubgruposList();
-            List<Subgrupos> subgruposListNew = grupos.getSubgruposList();
-            List<String> illegalOrphanMessages = null;
-            for (Subgrupos subgruposListOldSubgrupos : subgruposListOld) {
-                if (!subgruposListNew.contains(subgruposListOldSubgrupos)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Subgrupos " + subgruposListOldSubgrupos + " since its gruposId field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<Subgrupos> attachedSubgruposListNew = new ArrayList<Subgrupos>();
-            for (Subgrupos subgruposListNewSubgruposToAttach : subgruposListNew) {
-                subgruposListNewSubgruposToAttach = em.getReference(subgruposListNewSubgruposToAttach.getClass(), subgruposListNewSubgruposToAttach.getId());
-                attachedSubgruposListNew.add(subgruposListNewSubgruposToAttach);
-            }
-            subgruposListNew = attachedSubgruposListNew;
-            grupos.setSubgruposList(subgruposListNew);
             grupos = em.merge(grupos);
-            for (Subgrupos subgruposListNewSubgrupos : subgruposListNew) {
-                if (!subgruposListOld.contains(subgruposListNewSubgrupos)) {
-                    Grupos oldGruposIdOfSubgruposListNewSubgrupos = subgruposListNewSubgrupos.getGruposId();
-                    subgruposListNewSubgrupos.setGruposId(grupos);
-                    subgruposListNewSubgrupos = em.merge(subgruposListNewSubgrupos);
-                    if (oldGruposIdOfSubgruposListNewSubgrupos != null && !oldGruposIdOfSubgruposListNewSubgrupos.equals(grupos)) {
-                        oldGruposIdOfSubgruposListNewSubgrupos.getSubgruposList().remove(subgruposListNewSubgrupos);
-                        oldGruposIdOfSubgruposListNewSubgrupos = em.merge(oldGruposIdOfSubgruposListNewSubgrupos);
-                    }
-                }
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -121,7 +67,7 @@ public class GruposJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -132,17 +78,6 @@ public class GruposJpaController implements Serializable {
                 grupos.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The grupos with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            List<Subgrupos> subgruposListOrphanCheck = grupos.getSubgruposList();
-            for (Subgrupos subgruposListOrphanCheckSubgrupos : subgruposListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Grupos (" + grupos + ") cannot be destroyed since the Subgrupos " + subgruposListOrphanCheckSubgrupos + " in its subgruposList field has a non-nullable gruposId field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(grupos);
             em.getTransaction().commit();

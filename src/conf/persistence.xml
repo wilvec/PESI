@@ -9,6 +9,7 @@
     <class>co.edu.unal.pesi.modelo.Procesosorganizaciones</class>
     <class>co.edu.unal.pesi.modelo.Clasedatos</class>
     <class>co.edu.unal.pesi.modelo.Organizaciones</class>
+    <class>co.edu.unal.pesi.vista.Servicio</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistemainformacion?zeroDateTimeBehavior=convertToNull"/>

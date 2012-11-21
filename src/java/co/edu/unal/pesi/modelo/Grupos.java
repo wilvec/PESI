@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,6 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Grupos.findById", query = "SELECT g FROM Grupos g WHERE g.id = :id"),
     @NamedQuery(name = "Grupos.findByNombre", query = "SELECT g FROM Grupos g WHERE g.nombre = :nombre")})
 public class Grupos implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gruposId")
+    private List<Subgrupos> subgruposList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +44,9 @@ public class Grupos implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gruposId")
-    private List<Subgrupos> subgruposList;
+    @Lob
+    @Column(name = "descripcion")
+    private String descripcion;
 
     public Grupos() {
     }
@@ -72,13 +76,12 @@ public class Grupos implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlTransient
-    public List<Subgrupos> getSubgruposList() {
-        return subgruposList;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setSubgruposList(List<Subgrupos> subgruposList) {
-        this.subgruposList = subgruposList;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
@@ -104,6 +107,15 @@ public class Grupos implements Serializable {
     @Override
     public String toString() {
         return "co.edu.unal.pesi.modelo.Grupos[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Subgrupos> getSubgruposList() {
+        return subgruposList;
+    }
+
+    public void setSubgruposList(List<Subgrupos> subgruposList) {
+        this.subgruposList = subgruposList;
     }
     
 }
