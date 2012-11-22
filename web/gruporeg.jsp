@@ -6,7 +6,7 @@
     Servicio servicio = (Servicio) session.getAttribute("servicio");
     if (servicio == null) {
         servicio = new Servicio();
-
+        session.setAttribute("servicio", servicio);
     }
 
     Grupos grupo = new Grupos();

@@ -21,7 +21,7 @@
         Subgrupos sub1 = (Subgrupos) it.next();
         if (sub1.getGruposId().getId().intValue() == idGrupo) {
 %>
-<option value="<%=idx1++%>"><%=sub1.getNombre().toUpperCase()%></option>
+<option value="<%=sub1.getId()%>"><%=sub1.getNombre().toUpperCase()%></option>
 <%
             }
         }

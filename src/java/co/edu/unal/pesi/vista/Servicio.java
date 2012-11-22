@@ -1,16 +1,19 @@
 package co.edu.unal.pesi.vista;
 
 import co.edu.unal.pesi.modelo.Grupos;
+import co.edu.unal.pesi.modelo.Organizaciones;
+import co.edu.unal.pesi.modelo.Procesosorganizaciones;
 import co.edu.unal.pesi.modelo.Subgrupos;
 import co.edu.unal.pesi.servicio.ClasedatosJpaController;
 import co.edu.unal.pesi.servicio.EntidadJpaController;
 import co.edu.unal.pesi.servicio.GruposJpaController;
 import co.edu.unal.pesi.servicio.OrganizacionesJpaController;
+import co.edu.unal.pesi.servicio.ProcesosJpaController;
+import co.edu.unal.pesi.servicio.ProcesosorganizacionesJpaController;
 import co.edu.unal.pesi.servicio.SubgruposJpaController;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 
 /**
  *
@@ -24,7 +27,9 @@ public class Servicio {
     SubgruposJpaController subgrupos = null;
     EntidadJpaController entidad = null;
     ClasedatosJpaController clasesDatos = null;
-    
+    ProcesosorganizacionesJpaController procorganizaciones = null;
+    ProcesosJpaController procesos = null;
+
     public OrganizacionesJpaController getControlOrganizaciones() {
         if (organizacionServicio == null) {
             organizacionServicio = new OrganizacionesJpaController(emf);
@@ -38,35 +43,55 @@ public class Servicio {
         }
         return grupos;
     }
-    
-    public SubgruposJpaController getCtrlSubGrupos(){
+
+    public SubgruposJpaController getCtrlSubGrupos() {
         if (subgrupos == null) {
             subgrupos = new SubgruposJpaController(emf);
         }
         return subgrupos;
     }
-    
-    public EntidadJpaController getCtrlEntidad(){
-        if(entidad==null){
-            entidad=new EntidadJpaController(emf);
+
+    public EntidadJpaController getCtrlEntidad() {
+        if (entidad == null) {
+            entidad = new EntidadJpaController(emf);
         }
         return entidad;
     }
-    
-    public ClasedatosJpaController getCtrlClaseDatos(){
-        if(clasesDatos==null){
-            clasesDatos=new ClasedatosJpaController(emf);
+
+    public ClasedatosJpaController getCtrlClaseDatos() {
+        if (clasesDatos == null) {
+            clasesDatos = new ClasedatosJpaController(emf);
         }
         return clasesDatos;
     }
 
+    public ProcesosorganizacionesJpaController getCtrlProcOrga() {
+        if (procorganizaciones == null) {
+            procorganizaciones = new ProcesosorganizacionesJpaController(emf);
+        }
+        return procorganizaciones;
+    }
 
-    public List<Grupos> listarGrupos(){
+    public ProcesosJpaController getCtrlProcesos() {
+        if (procesos == null) {
+            procesos = new ProcesosJpaController(emf);
+        }
+        return procesos;
+    }
+
+    public List<Grupos> listarGrupos() {
         return getCrlGrupos().findGruposEntities();
     }
-    
-    public List<Subgrupos> listarSubgrupos(){
+
+    public List<Subgrupos> listarSubgrupos() {
         return getCtrlSubGrupos().findSubgruposEntities();
     }
 
+    public List<Organizaciones> listarOrganizaciones() {
+        return getControlOrganizaciones().findOrganizacionesEntities();
+    }
+
+    public List<Procesosorganizaciones> listarProcesoOrganizaciones() {
+        return getCtrlProcOrga().findProcesosorganizacionesEntities();
+    }
 }

@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Procesos.findByNombre", query = "SELECT p FROM Procesos p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "Procesos.findByTipo", query = "SELECT p FROM Procesos p WHERE p.tipo = :tipo")})
 public class Procesos implements Serializable {
+    @Lob
+    @Column(name = "actividades")
+    private String actividades;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -169,6 +172,14 @@ public class Procesos implements Serializable {
     @Override
     public String toString() {
         return "co.edu.unal.pesi.modelo.Procesos[ id=" + id + " ]";
+    }
+
+    public String getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(String actividades) {
+        this.actividades = actividades;
     }
     
 }

@@ -10,6 +10,9 @@
         session.setAttribute("servicio", servicio);
     }
     List lstGrupos = servicio.listarGrupos();
+
+    List lstOrganizaciones = servicio.listarOrganizaciones();
+    List lstProcesoOrganizacion = (List) session.getAttribute("lstProcesoOrganizacion");
 %>
 <!DOCTYPE html>
 <html>
@@ -39,6 +42,21 @@
                 oAjax.send(null);
             }
 
+            function agregarOrganizacion() {
+                var url = "llenatablaprocesos.jsp?";
+                var depeCombo = document.getElementById('dependencia');
+                var respCombo = document.getElementById('responsabilidad');
+                var idDep = depeCombo.options[depeCombo.selectedIndex].value;
+                var resp = respCombo.options[respCombo.selectedIndex].value;
+                url+="depe="+idDep+"&resp="+resp;
+                oAjax = getAjax();
+                oAjax.onreadystatechange = function() {
+                    if (oAjax.readyState == 4) {
+                        var resultado = oAjax.responseText;
+                    }
+                }
+            }
+
             function getAjax() {
                 if (window.XMLHttpRequest) {
                     return new XMLHttpRequest();
@@ -65,11 +83,12 @@
                 <td>GRUPO</td>
                 <td>
                     <select name="grupo" id="grupo" onchange="cambiaSubgrupo(this)">
+                        <option value="" selected></option>
                         <%
                             for (java.util.Iterator it = lstGrupos.iterator(); it.hasNext();) {
                                 Grupos grp = (Grupos) it.next();
                         %>
-                        <option value="<%=grp.getId() %>"><%=grp.getNombre().toUpperCase()%></option>
+                        <option value="<%=grp.getId()%>"><%=grp.getNombre().toUpperCase()%></option>
                         <%
                             }
                         %>
@@ -89,38 +108,61 @@
                 <td><input name="nombre" type="text" id="nombre" size="80"></td>
             </tr>
             <tr>
-                <td>Dependencia con mayor responsabilidad </td>
-                <td><select name="organizacion1" id="organizacion1">
+                <td>Dependencias con responsabilidad en el proceso</td>
+                <td>
+                    <select name="dependencia" id="dependencia">
+                        <%
+                            for (java.util.Iterator it = lstOrganizaciones.iterator(); it.hasNext();) {
+                                Organizaciones org = (Organizaciones) it.next();
+                        %>
+                        <option value="<%=org.getId()%>"><%=org.getNombre()%></option>
+                        <%
+                            }
+                        %>
                     </select>
-                    <input type="button" name="btoadd" id="btoadd" value="Agregar">
-                    <input type="button" name="btoadd4" id="btoadd4" value="ver"></td>
+                    <select name="responsabilida" id="responsabilida">
+                        <option value="1">RESPONSABILIDAD MAYOR. TOMADOR DE DESICION</option>
+                        <option value="2">PARTICIPACION MAYOR</option>
+                        <option value="3">ALGUNA PARTICIPACION</option>
+                    </select>
+                    <input type="button" name="agregar" id="agregar" value="Agregar" onclick="agregarOrganizacion()"></td>
             </tr>
             <tr>
-                <td> Dependencia con menor responsabilidad</td>
-                <td><select name="organizacion2" id="organizacion2">
-                    </select>
-                    <input type="button" name="btoadd2" id="btoadd2" value="Agregar">
-                    <input type="button" name="btoadd5" id="btoadd5" value="ver"></td>
-            </tr>
-            <tr>
-                <td>Dependencia Relacionada</td>
-                <td><select name="organizacion3" id="organizacion3">
-                    </select>
-                    <input type="button" name="btoadd3" id="btoadd3" value="Agregar">
-                    <input type="button" name="btoadd6" id="btoadd6" value="ver"></td>
+                <td>&nbsp;</td>
+                <td><div id="divDependencias">
+                        <table width="100%" border="0" cellspacing="1" cellpadding="1">
+                            <tr>
+                                <td align="center"><strong>DEPENDENCIA</strong></td>
+                                <td align="center"><strong>RESPONSABILIDAD</strong></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </table>
+                    </div></td>
             </tr>
             <tr>
                 <td>2. OBJETIVOS</td>
                 <td><textarea name="objetivos" cols="80" rows="5" id="objetivos"></textarea></td>
             </tr>
             <tr>
-                <td rowspan="2">3. INSUMOS, INSUMOS</td>
+                <td rowspan="2">3. ENTRADAS, INSUMOS</td>
                 <td><select name="insumos" id="insumos">
                     </select>
                     <input type="button" name="btoAddInsumo" id="btoAddInsumo" value="Agregar"></td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
+                <td><div id="divInsumos">
+                        <table width="100%" border="0" cellspacing="1" cellpadding="1">
+                            <tr>
+                                <td align="center"><strong>ENTRADAS, INSUMOS</strong></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </table>
+                    </div></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -141,7 +183,16 @@
                     <input type="button" name="btoAddSalida" id="btoAddSalida" value="Agregar"></td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
+                <td><div id="divSalidas">
+                        <table width="100%" border="0" cellspacing="1" cellpadding="1">
+                            <tr>
+                                <td align="center"><strong>SALIDAS, PRODUCTOS</strong></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </table>
+                    </div></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
