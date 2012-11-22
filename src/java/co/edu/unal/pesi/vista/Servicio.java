@@ -1,7 +1,9 @@
 package co.edu.unal.pesi.vista;
 
+import co.edu.unal.pesi.modelo.Clasedatos;
 import co.edu.unal.pesi.modelo.Grupos;
 import co.edu.unal.pesi.modelo.Organizaciones;
+import co.edu.unal.pesi.modelo.Procesosclasesdatos;
 import co.edu.unal.pesi.modelo.Procesosorganizaciones;
 import co.edu.unal.pesi.modelo.Subgrupos;
 import co.edu.unal.pesi.servicio.ClasedatosJpaController;
@@ -9,6 +11,7 @@ import co.edu.unal.pesi.servicio.EntidadJpaController;
 import co.edu.unal.pesi.servicio.GruposJpaController;
 import co.edu.unal.pesi.servicio.OrganizacionesJpaController;
 import co.edu.unal.pesi.servicio.ProcesosJpaController;
+import co.edu.unal.pesi.servicio.ProcesosclasesdatosJpaController;
 import co.edu.unal.pesi.servicio.ProcesosorganizacionesJpaController;
 import co.edu.unal.pesi.servicio.SubgruposJpaController;
 import java.util.List;
@@ -29,6 +32,7 @@ public class Servicio {
     ClasedatosJpaController clasesDatos = null;
     ProcesosorganizacionesJpaController procorganizaciones = null;
     ProcesosJpaController procesos = null;
+    ProcesosclasesdatosJpaController procCD = null;
 
     public OrganizacionesJpaController getControlOrganizaciones() {
         if (organizacionServicio == null) {
@@ -78,6 +82,13 @@ public class Servicio {
         }
         return procesos;
     }
+    
+    public ProcesosclasesdatosJpaController getCtrlPCD(){
+        if(procCD == null){
+            procCD = new ProcesosclasesdatosJpaController(emf);
+        }
+        return procCD;
+    }
 
     public List<Grupos> listarGrupos() {
         return getCrlGrupos().findGruposEntities();
@@ -93,5 +104,13 @@ public class Servicio {
 
     public List<Procesosorganizaciones> listarProcesoOrganizaciones() {
         return getCtrlProcOrga().findProcesosorganizacionesEntities();
+    }
+    
+    public List<Clasedatos> listarClasedatos(){
+        return getCtrlClaseDatos().findClasedatosEntities();
+    }
+    
+    public List<Procesosclasesdatos> listarPCD(){
+        return getCtrlPCD().findProcesosclasesdatosEntities();
     }
 }

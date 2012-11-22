@@ -38,6 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Procesos.findByNombre", query = "SELECT p FROM Procesos p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "Procesos.findByTipo", query = "SELECT p FROM Procesos p WHERE p.tipo = :tipo")})
 public class Procesos implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesos")
+    private List<Procesosclasesdatos> procesosclasesdatosList;
     @Lob
     @Column(name = "actividades")
     private String actividades;
@@ -180,6 +182,15 @@ public class Procesos implements Serializable {
 
     public void setActividades(String actividades) {
         this.actividades = actividades;
+    }
+
+    @XmlTransient
+    public List<Procesosclasesdatos> getProcesosclasesdatosList() {
+        return procesosclasesdatosList;
+    }
+
+    public void setProcesosclasesdatosList(List<Procesosclasesdatos> procesosclasesdatosList) {
+        this.procesosclasesdatosList = procesosclasesdatosList;
     }
     
 }
