@@ -38,10 +38,12 @@
     </tr>
     <% for (java.util.Iterator it = lstProOrg.iterator(); it.hasNext();) {
             Procesosorganizaciones pog = (Procesosorganizaciones) it.next();
+            if (pog.getProcesos().equals(proc)) {
     %>
     <tr>
         <td><%=pog.getOrganizaciones().getNombre()%></td>
         <td><%=pog.getResponsabilidad() == 1 ? "RESPONSABILIDAD MAYOR. TOMADOR DE DESICION" : pog.getResponsabilidad() == 2 ? "PARTICIPACION MAYOR" : "ALGUNA PARTICIPACION"%></td>
     </tr>
-    <% }%>
+    <% }
+                                }%>
 </table>

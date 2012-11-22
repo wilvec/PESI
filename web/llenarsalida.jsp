@@ -32,14 +32,17 @@
     
 %>
 <table width="100%" border="0" cellspacing="1" cellpadding="1">
-    <tr>
-        <td align="center"><strong>ENTRADAS, INSUMOS</strong></td>
-    </tr>
-    <% for (java.util.Iterator it = lstPCD.iterator(); it.hasNext();) {
-            Procesosclasesdatos pcd2 = (Procesosclasesdatos) it.next();
-    %>
-    <tr>
-        <td><%=pcd2.getClasedatos().getNombre()%></td>
-    </tr>
-    <% }%>
+<tr>
+	<td align="center"><strong>SALIDAS, PRODUCTOS</strong></td>
+</tr>
+<% for (java.util.Iterator it = lstPCD.iterator(); it.hasNext();) {
+        pcd = (Procesosclasesdatos) it.next();
+
+if ( pcd.getProcesos().equals(proc) && (pcd.getTipouso().equals("C") || pcd.getTipouso().equals("CU"))   ) {
+%>
+<tr>
+	<td><%=pcd.getClasedatos().getNombre()%></td>
+</tr>
+<% }
+}%>
 </table>

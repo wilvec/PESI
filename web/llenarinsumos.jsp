@@ -4,7 +4,7 @@
 <%@page import="co.edu.unal.pesi.modelo.*"%>
 <%@page import="co.edu.unal.pesi.servicio.*"%>
 <%@page import="co.edu.unal.pesi.vista.*"%>
-<%    
+<%
     Servicio servicio = (Servicio) session.getAttribute("servicio");
     if (servicio == null) {
         servicio = new Servicio();
@@ -28,18 +28,20 @@
     } catch (Exception e) {
     }
     List lstPCD = servicio.listarPCD();
-    
-    
+
+
 %>
 <table width="100%" border="0" cellspacing="1" cellpadding="1">
     <tr>
         <td align="center"><strong>ENTRADAS, INSUMOS</strong></td>
     </tr>
     <% for (java.util.Iterator it = lstPCD.iterator(); it.hasNext();) {
-            Procesosclasesdatos pcd2 = (Procesosclasesdatos) it.next();
+            pcd = (Procesosclasesdatos) it.next();
+            if (pcd.getProcesos().equals(proc) && pcd.getTipouso().equals("U")) {
     %>
     <tr>
-        <td><%=pcd2.getClasedatos().getNombre()%></td>
+        <td><%=pcd.getClasedatos().getNombre()%></td>
     </tr>
-    <% }%>
+    <% }
+        }%>
 </table>

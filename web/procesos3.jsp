@@ -132,12 +132,14 @@
                             </tr>
                             <% for (java.util.Iterator it = lstProOrg.iterator(); it.hasNext();) {
                                     Procesosorganizaciones pog = (Procesosorganizaciones) it.next();
+                                    if (pog.getProcesos().equals(proc)) {
                             %>
                             <tr>
                                 <td><%=pog.getOrganizaciones().getNombre()%></td>
                                 <td><%=pog.getResponsabilidad() == 1 ? "RESPONSABILIDAD MAYOR. TOMADOR DE DESICION" : pog.getResponsabilidad() == 2 ? "PARTICIPACION MAYOR" : "ALGUNA PARTICIPACION"%></td>
                             </tr>
-                            <% }%>                        
+                            <% }
+                                }%>
                         </table>
                     </div>
 
@@ -163,11 +165,13 @@
                             </tr>
                             <% for (java.util.Iterator it = lstPCD.iterator(); it.hasNext();) {
                                     Procesosclasesdatos pcd = (Procesosclasesdatos) it.next();
+                                    if (pcd.getProcesos().equals(proc) && pcd.getTipouso().equals("U")) {
                             %>
                             <tr>
                                 <td><%=pcd.getClasedatos().getNombre()%></td>
                             </tr>
-                            <% }%>
+                            <% }
+                                }%>
                         </table>
                     </div></td>
             </tr>
@@ -182,7 +186,7 @@
             <tr>
                 <td rowspan="2">5. SALIDAS, PRODUCTOS</td>
                 <td>
-                    <select name="salidas" id="salidas">
+                    <select name="salida" id="salida">
                         <% for (java.util.Iterator it = lstCD.iterator(); it.hasNext();) {
                                 Clasedatos clsd = (Clasedatos) it.next();
                         %>
@@ -192,7 +196,7 @@
                     </select>
                     <input type="checkbox" name="creausa" id="creausa">
                     (Crea y Usa)  
-                    <input type="button" name="btoAddSalida" id="btoAddSalida" value="Agregar" onclick="agregarSalida()"></td>
+                    <input type="button" name="btoAddSalida" id="btoAddSalida" value="Agregar" onclick="agregarSalida();"></td>
             </tr>
             <tr>
                 <td><div id="divSalidas">
@@ -200,9 +204,16 @@
                             <tr>
                                 <td align="center"><strong>SALIDAS, PRODUCTOS</strong></td>
                             </tr>
+                            <% for (java.util.Iterator it = lstPCD.iterator(); it.hasNext();) {
+                                    Procesosclasesdatos pcd = (Procesosclasesdatos) it.next();
+									
+                                    if ( pcd.getProcesos().equals(proc) && (pcd.getTipouso().equals("C") || pcd.getTipouso().equals("CU"))   ) {
+                            %>
                             <tr>
-                                <td>&nbsp;</td>
+                                <td><%=pcd.getClasedatos().getNombre()%></td>
                             </tr>
+                            <% }
+                                }%>
                         </table>
                     </div></td>
             </tr>
