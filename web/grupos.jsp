@@ -30,6 +30,7 @@
     <td align="center"><input type="submit" name="guardar" id="guardar" value="Guardar" /></td>
   </tr>
 </table>
+<p><a href="lstGrupos.jsp">VOLVER</a></p>
 </form>
 </body>
 </html>

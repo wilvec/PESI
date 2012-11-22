@@ -31,8 +31,8 @@
     </head>
     <body>
         <h1>CLASES DE DATOS</h1>
-        <form id="form1" name="form1" method="post" action="clasedatosreg.jsp">
-            <table width="45%" border="0" cellspacing="1" cellpadding="1">
+    <form id="form1" name="form1" method="post" action="clasedatosreg.jsp">
+      <table width="45%" border="0" cellspacing="1" cellpadding="1">
                 <tr>
                     <td>CODIGO</td>
                     <td><input name="codigo" type="text" id="codigo" size="15" /></td>
@@ -69,8 +69,9 @@
                     <td>&nbsp;</td>
                     <td align="center"><input type="submit" name="button" id="button" value="Guardar" /></td>
                 </tr>
-            </table>
-        </form>
+        </table>
+            <p><a href="lsclasedatos.jsp">VOLVER</a></p>
+      </form>
         <p>&nbsp;</p>
     </body>
 </html>

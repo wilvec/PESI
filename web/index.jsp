@@ -9,28 +9,31 @@
 <body>
 <table width="77%" border="0" align="center" cellpadding="1" cellspacing="1">
   <tr>
-    <td width="4%">&nbsp;</td>
-    <td width="90%">&nbsp;</td>
+    <td width="6%">&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
     <td width="6%">&nbsp;</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td width="43%" align="center"><a href="lstGrupos.jsp">GRUPOS</a></td>
+    <td width="45%" align="center"><a href="lstorganizacion.jsp">ORGANIZACIONES</a></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
+    <td align="center"><a href="lstSubGrupos.jsp">SUBGRUPOS</a></td>
+    <td align="center"><a href="lstProceso.jsp">PROCESOS</a></td>
     <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td align="center"><a href="lstEntidades.jsp">ENTIDADES</a></td>
+    <td align="center"><a href="lsclasedatos.jsp">CLASES DE DATOS</a></td>
     <td>&nbsp;</td>
   </tr>
 </table>

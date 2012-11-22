@@ -42,7 +42,7 @@
     %>
     <tr>
         <td><%=pog.getOrganizaciones().getNombre()%></td>
-        <td><%=pog.getResponsabilidad() == 1 ? "RESPONSABILIDAD MAYOR. TOMADOR DE DESICION" : pog.getResponsabilidad() == 2 ? "PARTICIPACION MAYOR" : "ALGUNA PARTICIPACION"%></td>
+        <td><%=pog.getResponsabilidad() == 1 ? "RESPONSABILIDAD MAYOR. TOMADOR DE DESICION" : pog.getResponsabilidad() == 2 ? "PARTICIPACION MAYOR" : pog.getResponsabilidad() == 3 ? "ALGUNA PARTICIPACION" : "NINGUNA PARTICIPACION"%></td>
     </tr>
     <% }
                                 }%>

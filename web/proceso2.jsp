@@ -118,5 +118,6 @@
         </table>
         </form>
         <p>&nbsp;</p>
+        <p><a href="lstProceso.jsp">VOLVER</a></p>
     </body>
 </html>

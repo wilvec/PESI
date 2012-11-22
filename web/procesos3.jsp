@@ -11,6 +11,12 @@
     }
     List lstOrganizaciones = servicio.listarOrganizaciones();
     Procesos proc = (Procesos) session.getAttribute("proceso");
+    if (proc == null) {
+        int proId = Integer.valueOf(request.getParameter("procid") == null ? "0":request.getParameter("procid"));
+        List lstProc = servicio.listarProcesos();
+        proc = Utiles.buscarProcesosId(lstProc, proId);
+        session.setAttribute("proceso", proc);
+    }
     List lstProOrg = servicio.listarProcesoOrganizaciones();
     List lstCD = servicio.listarClasedatos();
     List lstPCD = servicio.listarPCD();
@@ -61,7 +67,7 @@
                 var url = "llenarsalida.jsp?";
                 var depeCombo = document.getElementById('salida');
                 var idIns = depeCombo.options[depeCombo.selectedIndex].value;
-                var chk = document.getElementById('creausa').value;
+                var chk = document.getElementById('creausa').checked;
                 url += "salida=" + idIns + "&creausa=" + chk;
                 oAjax = getAjax();
                 oAjax.onreadystatechange = function() {
@@ -118,6 +124,7 @@
                         <option value="1">RESPONSABILIDAD MAYOR. TOMADOR DE DESICION</option>
                         <option value="2">PARTICIPACION MAYOR</option>
                         <option value="3">ALGUNA PARTICIPACION</option>
+                        <option value="4">NINGUNA PARTICIPACION</option>
                     </select>
                     <input type="button" name="agregar" id="agregar" value="Agregar" onclick="agregarOrganizacion()"></td>
             </tr>
@@ -136,7 +143,7 @@
                             %>
                             <tr>
                                 <td><%=pog.getOrganizaciones().getNombre()%></td>
-                                <td><%=pog.getResponsabilidad() == 1 ? "RESPONSABILIDAD MAYOR. TOMADOR DE DESICION" : pog.getResponsabilidad() == 2 ? "PARTICIPACION MAYOR" : "ALGUNA PARTICIPACION"%></td>
+                                <td><%=pog.getResponsabilidad() == 1 ? "RESPONSABILIDAD MAYOR. TOMADOR DE DESICION" : pog.getResponsabilidad() == 2 ? "PARTICIPACION MAYOR" : pog.getResponsabilidad() == 3 ? "ALGUNA PARTICIPACION" : "NINGUNA PARTICIPACION"%></td>
                             </tr>
                             <% }
                                 }%>
@@ -206,8 +213,8 @@
                             </tr>
                             <% for (java.util.Iterator it = lstPCD.iterator(); it.hasNext();) {
                                     Procesosclasesdatos pcd = (Procesosclasesdatos) it.next();
-									
-                                    if ( pcd.getProcesos().equals(proc) && (pcd.getTipouso().equals("C") || pcd.getTipouso().equals("CU"))   ) {
+
+                                    if (pcd.getProcesos().equals(proc) && (pcd.getTipouso().equals("C") || pcd.getTipouso().equals("CU"))) {
                             %>
                             <tr>
                                 <td><%=pcd.getClasedatos().getNombre()%></td>
@@ -226,6 +233,7 @@
                 <td>&nbsp;</td>
             </tr>
         </table>
+        <p><a href="lstProceso.jsp">VOLVER</a></p>
         <p>&nbsp;</p>
     </body>
 </html>

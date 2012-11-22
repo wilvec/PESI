@@ -1,8 +1,10 @@
 package co.edu.unal.pesi.vista;
 
 import co.edu.unal.pesi.modelo.Clasedatos;
+import co.edu.unal.pesi.modelo.Entidad;
 import co.edu.unal.pesi.modelo.Grupos;
 import co.edu.unal.pesi.modelo.Organizaciones;
+import co.edu.unal.pesi.modelo.Procesos;
 import co.edu.unal.pesi.modelo.Procesosclasesdatos;
 import co.edu.unal.pesi.modelo.Procesosorganizaciones;
 import co.edu.unal.pesi.modelo.Subgrupos;
@@ -106,11 +108,23 @@ public class Servicio {
         return getCtrlProcOrga().findProcesosorganizacionesEntities();
     }
     
+    public List<Procesosclasesdatos> listarProcesoClasesDeDatos() {
+        return getCtrlPCD().findProcesosclasesdatosEntities();
+    }
+    
     public List<Clasedatos> listarClasedatos(){
         return getCtrlClaseDatos().findClasedatosEntities();
     }
     
     public List<Procesosclasesdatos> listarPCD(){
         return getCtrlPCD().findProcesosclasesdatosEntities();
+    }
+    
+    public List<Entidad> listarEntidad(){
+        return getCtrlEntidad().findEntidadEntities();
+    }
+    
+    public List<Procesos> listarProcesos(){
+        return getCtrlProcesos().findProcesosEntities();
     }
 }
