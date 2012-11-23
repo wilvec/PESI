@@ -24,7 +24,7 @@ public class VerificarAfinidad {
         int numeroDeClases = 0, i, j,indiceSiguiente=0,segundo=0;
         ArrayList claseActual, claseSiguiente, claseSubSiguiente;
         numeroDeClases = matriz.size();
-        for (i = 1; i < numeroDeClases; i=i+2) {
+        for (i = 1; i < numeroDeClases; i=i++) {
             indiceSiguiente=i+1;
             if(indiceSiguiente<numeroDeClases){
             claseActual = (ArrayList) matriz.get(i);

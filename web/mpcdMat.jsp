@@ -28,11 +28,12 @@
     VerificarAfinidad vf = new VerificarAfinidad();
     vf.setMatriz((ArrayList) listaOriginal);
     vf.verificar();
+    List lisOrdenado = vf.getMatriz();
     af.setMatrizValoresLlenos(vf.getMatriz());
     af.cambiar();
     List lstCambio = af.getMatrizValoresLlenos();
 
-    List linterna = (ArrayList) listaOriginal.get(0);
+    
 
 
 
@@ -61,25 +62,75 @@
         </style>
     </head>
     <body>
-
         <table width="46%" border="1" cellpadding="1" cellspacing="1" class="tabla">
-            <%   
-            List l2 = (List)listaOriginal.get(0);
-            for (int i = 0; i < l2.size(); i++) {
+            <%
+                List l2 = (List) listaOriginal.get(0);
+                for (int i = 0; i < l2.size(); i++) {
             %>    
             <tr>
                 <%
-                    for(int j= 0; j < listaOriginal.size(); j++){
-                    List l3 = (List)listaOriginal.get(j);
-                    
-            %>
-            <td><%=l3.get(i)%></td>
-            <% } %>
+                    for (int j = 0; j < listaOriginal.size(); j++) {
+                        List l3 = (List) listaOriginal.get(j);
+
+                %>
+                <td align="center"><%=l3.get(i)%></td>
+                <% }%>
             </tr>
-                 <%   } %>
+            <%   }%>
         </table>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <table width="46%" border="1" cellpadding="1" cellspacing="1" class="tabla">
+            <%
+                l2 = (List) lstAFParOriginal.get(0);
+                for (int i = 0; i < l2.size(); i++) {
+            %>    
+            <tr>
+                <%
+                    for (int j = 0; j < lstAFParOriginal.size(); j++) {
+                        List l3 = (List) lstAFParOriginal.get(j);
 
+                %>
+                <td align="center"><%=l3.get(i)%></td>
+                <% }%>
+            </tr>
+            <%   }%>
+        </table>
+<p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <table width="46%" border="1" cellpadding="1" cellspacing="1" class="tabla">
+            <%
+                l2 = (List) lisOrdenado.get(0);
+                for (int i = 0; i < l2.size(); i++) {
+            %>    
+            <tr>
+                <%
+                    for (int j = 0; j < lisOrdenado.size(); j++) {
+                        List l3 = (List) lisOrdenado.get(j);
 
+                %>
+                <td align="center"><%=l3.get(i)%></td>
+                <% }%>
+            </tr>
+            <%   }%>
+        </table>            
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <table width="46%" border="1" cellpadding="1" cellspacing="1" class="tabla">
+            <%
+                l2 = (List) lstCambio.get(0);
+                for (int i = 0; i < l2.size(); i++) {
+            %>    
+            <tr>
+                <%
+                    for (int j = 0; j < lstCambio.size(); j++) {
+                        List l3 = (List) lstCambio.get(j);
+                %>
+                <td align="center"><%=l3.get(i)%></td>
+                <% }%>
+            </tr>
+            <%   }%>
+        </table>
 
     </body>
 </html>
