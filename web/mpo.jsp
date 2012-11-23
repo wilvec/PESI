@@ -4,7 +4,6 @@
 <%@page import="co.edu.unal.pesi.vista.Servicio"%>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <%
-
     Servicio servicio = (Servicio) session.getAttribute("servicio");
     if (servicio == null) {
         servicio = new Servicio();
@@ -41,18 +40,17 @@
         <table width="46%" border="1" cellpadding="1" cellspacing="1" class="tabla">
             <caption>PROCESOS /ORGANIZACION</caption>
             <%
-                int i = 0;
+                int i = 0,j=0;
                 for (java.util.Iterator it = lstProc.iterator(); it.hasNext();) {
                     Procesos p = (Procesos) it.next();
-
             %>
-            <tr>
-                <% if(i == 0){ %>
+            
+                
+                <% if (i == 0) {
+                    %>
+                        <tr>
                 <td>&nbsp;</td>
-                <% }else{ %>
-                <td class="linea"><%=p.getNombre()%></td>
-                        
-                <%} if (i == 0) {
+                <%
                         for (java.util.Iterator it2 = lstO.iterator(); it2.hasNext();) {
                             Organizaciones org = (Organizaciones) it2.next();
 
@@ -62,14 +60,43 @@
                 <td align="center" class="linea"><%=org.getNombre()%></td>
                 <%
                     }
-                } else {
+                    %>
+                        </tr>
+                            <tr>
+                <td><%=p.getNombre()%></td>
+                <% 
                     for (java.util.Iterator it2 = lstO.iterator(); it2.hasNext();) {
                         Organizaciones org = (Organizaciones) it2.next();
                 %>
                 <td align="center"><%=Utiles.buscarResposabilidad(lstG, p, org)%></td>
                 <% }
+                      %>
+                        </tr>  
+                     <%     
+                } else {
+                    %>
+                      <tr>  
+                    <%  
+                        j=0;
+                    for (java.util.Iterator it2 = lstO.iterator(); it2.hasNext();) {
+                        Organizaciones org = (Organizaciones) it2.next();
+                            if(j==0){
+                %>
+                    <td><%=p.getNombre()%></td>
+                        <td align="center"><%=Utiles.buscarResposabilidad(lstG, p, org)%></td>
+                   <%
+                            }else{                       
+                   %>     
+                <td align="center"><%=Utiles.buscarResposabilidad(lstG, p, org)%></td>
+                <% 
+                                   }
+                    j++;
+                    }
+                    %>
+                      </tr>  
+                    <%
                     }%>
-            </tr>
+            
             <% i++;
                 }%>
         </table>

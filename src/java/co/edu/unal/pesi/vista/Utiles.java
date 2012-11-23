@@ -1,5 +1,7 @@
 package co.edu.unal.pesi.vista;
 
+import co.edu.unal.pesi.AfinidadParAPar;
+import co.edu.unal.pesi.VerificarAfinidad;
 import co.edu.unal.pesi.modelo.Clasedatos;
 import co.edu.unal.pesi.modelo.Grupos;
 import co.edu.unal.pesi.modelo.Organizaciones;
@@ -7,6 +9,7 @@ import co.edu.unal.pesi.modelo.Procesos;
 import co.edu.unal.pesi.modelo.Procesosorganizaciones;
 import co.edu.unal.pesi.modelo.Subgrupos;
 import co.edu.unal.pesi.modelo.Procesosclasesdatos;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -91,5 +94,30 @@ public class Utiles {
             }
         }
         return "";
+    }
+    
+    public static List pasarAArray(List lspcd, List p, List cd){
+        ArrayList matriz=new ArrayList(),linea=new ArrayList();
+        Clasedatos cdt;
+        int i;
+        linea.add("PROCESOS");
+        for (Iterator it1 = p.iterator(); it1.hasNext();) {
+            Procesos pr =(Procesos) it1.next();
+            linea.add(pr.getNombre());
+        }
+        matriz.add(linea);
+        for(i=0;i<cd.size();i++){
+            linea=new ArrayList();
+            cdt=(Clasedatos) cd.get(i);
+            linea.add(cdt.getNombre());
+            for (Iterator it1 = p.iterator(); it1.hasNext();) {
+            Procesos pr =(Procesos) it1.next();
+            linea.add(Utiles.buscarTipoUso(lspcd, pr, cdt));
+        }
+            matriz.add(linea);
+        }
+        return matriz;
+        
+       
     }
 }
